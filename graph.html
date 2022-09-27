@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<head>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js">
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, 
+                                   initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js">
+    </script>
+    <title>US Population Chart</title>
+</head>
+
+<body>
+
+    <canvas id="line-chart" width="800" height="450">
+    </canvas>
+    <script>
+
+        getData();
+
+        async function getData() {
+            const response = await fetch(
+                'https://satsin06.github.io/customApis/swim_results.json');
+            console.log(response);
+            const data = await response.json();
+            sortedData = data.slice().sort((a, b) => b.time - a.time);
+            sortedData1 = data.slice().sort((a, b) => a.time - b.time);
+            console.log(sortedData);
+            length = sortedData.length;
+            console.log(length);
+
+            labels = [];
+            values = [];
+            for (i = 0; i < length; i++) {
+                labels.push(sortedData[i].name);
+                values.push(sortedData[i].time);
+            }
+            new Chart(document.getElementById("line-chart"), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: "Swimmers",
+                            backgroundColor: "rgba(0,0,0,1.0)",
+                            borderColor: "rgba(0,0,0,0.1)",
+                            fill: false,
+                            data: values
+                        }
+                    ]
+                },
+                options: {
+                    legend: { display: false },
+                    ticks: {
+                        reverse: true
+                    },
+                    scales: {
+                        yAxes: [{ ticks: { min: 75, max: 115,reverse: true, }}],
+                    }
+                }
+            });
+        }
+
+    </script>
+</body>
+
+</html>
+</body>
+
+</html>
