@@ -9,6 +9,7 @@ const response = await fetch(url);
 
 // Storing data in form of JSON
 var data = await response.json();
+data = data.slice().sort((a, b) => b.time - a.time);
 console.log(data);
 if (response) {
   hideloader();
